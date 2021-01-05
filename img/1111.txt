@@ -1,0 +1,137 @@
+### curl
+
+
+
+#### curl url
+
+> 作用：获取页面内容或接口
+
+
+
+curl  https://act.vip.iqiyi.com/api/process.action?cb=cb_1540200657317\&cid=afbe8fd3d73448c9\&interfaceCode=b5018a28d5f8609f\&pid=92b01a8207f5c404
+
+```shell
+$ curl  https://act.vip.iqiyi.com/api/process.action?cb=cb_1540200657317\&cid=afbe8fd3d73448c9\&interfaceCode=b5018a28d5f8609f\&pid=92b01a8207f5c404
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    72  100    72    0     0    333      0 --:--:-- --:--:-- --:--:--   333var cb_1540200657317={"code":"Q00330","data":{},"msg":"活动已结束"}
+```
+
+
+
+**注意：上述curl的路径中使用了\转义符号，当url中包含了多个参数时，需要使用\转义符**
+
+
+
+#### curl -I url
+
+> 作用：获取请求页面或接口的请求头信息
+
+
+
+curl  -I  https://act.vip.iqiyi.com/api/process.action?cb=cb_1540200657317\&cid=afbe8fd3d73448c9\&interfaceCode=b5018a28d5f8609f\&pid=92b01a8207f5c404
+
+```shell
+$ curl  -I  https://act.vip.iqiyi.com/api/process.action?cb=cb_1540200657317\&cid=afbe8fd3d73448c9\&interfaceCode=b5018a28d5f8609f\&pid=92b01a8207f5c404
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0    72    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0HTTP/1.1 200
+Server: nginx
+Date: Wed, 12 Aug 2020 00:58:32 GMT
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 72
+Connection: keep-alive
+Content-Disposition: inline;filename=f.txt
+Access-Control-Allow-Credentials: true
+X-Frame-Options: SAMEORIGIN
+```
+
+上述命令只会返回请求头信息，而不包含相应内容，可以使用-i参数来返回请求头和相应信息。
+
+```shell
+$ curl  -i  https://act.vip.iqiyi.com/api/process.action?cb=cb_1540200657317\&cid=afbe8fd3d73448c9\&interfaceCode=b5018a28d5f8609f\&pid=92b01a8207f5c404
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    72  100    72    0     0    450      0 --:--:-- --:--:-- --:--:--   450HTTP/1.1 200
+Server: nginx
+Date: Wed, 12 Aug 2020 01:01:30 GMT
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 72
+Connection: keep-alive
+Content-Disposition: inline;filename=f.txt
+Access-Control-Allow-Credentials: true
+X-Frame-Options: SAMEORIGIN
+
+var cb_1540200657317={"code":"Q00330","data":{},"msg":"活动已结束"}
+```
+
+
+
+#### curl  -d  "params" url
+
+> 作用：使用-d发送带参数的请求（默认是post方式提交）
+
+
+
+curl -d "cb=cb_1540200657317&cid=afbe8fd3d73448c9&interfaceCode=b5018a28d5f8609f&pid=92b01a8207f5c404" https://act.vip.iqiyi.com/api/process.action
+
+```shell
+$ curl -d "cb=cb_1540200657317&cid=afbe8fd3d73448c9&interfaceCode=b5018a28d5f8609f&pid=92b01a8207f5c404" https://act.vip.iqiyi.com/api/process.action
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   164  100    72  100    92    685    876 --:--:-- --:--:-- --:--:--  1561var cb_1540200657317={"code":"Q00330","data":{},"msg":"活动已结束"}
+```
+
+作用和上面说的第一点一致，你也可以使用 -X GET 参数来指定GET方式提交请求：curl -d "cb=cb_1540200657317&cid=afbe8fd3d73448c9&interfaceCode=b5018a28d5f8609f&pid=92b01a8207f5c404"-X GET https://act.vip.iqiyi.com/api/process.action
+
+
+
+#### curl -v url
+
+> 作用：显示一次 http 通信的整个过程，包括端口连接和 http request 头信息
+
+
+
+curl -v www.sina.com
+
+```shell
+$ curl -v www.sina.com
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 140.249.5.49:80...
+* Connected to www.sina.com (140.249.5.49) port 80 (#0)
+> GET / HTTP/1.1
+> Host: www.sina.com
+> User-Agent: curl/7.69.1
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 301 Moved Permanently
+< Server: nginx
+< Date: Wed, 12 Aug 2020 01:22:03 GMT
+< Content-Type: text/html
+< Content-Length: 178
+< Connection: keep-alive
+< Location: http://www.sina.com.cn/
+< Expires: Wed, 12 Aug 2020 01:23:38 GMT
+< Cache-Control: max-age=120
+< X-Via-SSL: ssl.22.sinag1.qxg.lb.sinanode.com
+< Edge-Copy-Time: 1597195322605
+< Age: 25
+< Via: https/1.1 ctc.guangzhou.union.182 (ApacheTrafficServer/6.2.1 [cRs f ]), https/1.1 ctc.qingdao.union.32 (ApacheTrafficServer/6.2.1 [cRs f ])
+< X-Via-Edge: 1597195323487c9c9a17b3105f98c23926591
+< X-Cache: HIT.32
+< X-Via-CDN: f=edge,s=ctc.qingdao.union.24.nb.sinaedge.com,c=123.161.201.201;f=Edge,s=ctc.qingdao.union.32,c=140.249.5.24
+<
+{ [178 bytes data]
+100   178  100   178    0     0   2507      0 --:--:-- --:--:-- --:--:--  2507<html>
+<head><title>301 Moved Permanently</title></head>
+<body bgcolor="white">
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+* Connection #0 to host www.sina.com left intact
+```
+
